@@ -21,13 +21,63 @@ class RailchatService
         $this->client = new Client($credentials['key'], $credentials['secret']);
     }
 
-    public function updateChannel($channel)
+    public function createChannel(): string
     {
+        $userData = config('railchat.channel_founder');
 
+        $this->client->updateUser($userData);
+
+        $channelName = config('railchat.channel_name');
+
+        $channel = $this->client->Channel('messaging', $channelName);
+
+        $channel->create($userData['id']);
+
+        return $channelName;
     }
 
-    public function getUserToken($userId, $displayName, $avatarUrl, $profileUrl, $isAdministrator, $channelName)
+    public function getChannelsList(): array
     {
+        $channelsListConfig = config('railchat.channels_list');
+
+        $channels = $this->client->queryChannels(
+            $channelsListConfig['filter'],
+            $channelsListConfig['sort'],
+            $channelsListConfig['options']
+        );
+
+        return $channels['channels'];
+    }
+
+    public function removeChannel($channelName)
+    {
+        $channel = $this->client->Channel('messaging', $channelName);
+
+        $channel->delete();
+    }
+
+    public function resetChannel($channelName)
+    {
+        $channel = $this->client->Channel('messaging', $channelName);
+
+        $channel->truncate();
+    }
+
+    public function getChannelMembersCount(): int
+    {
+        $channelName = config('railchat.channel_name');
+
+        $channel = $this->client->Channel('messaging', $channelName);
+
+        $membersData = $channel->queryMembers();
+
+        return count($membersData['members']);
+    }
+
+    public function getUserToken($userId, $displayName, $avatarUrl, $profileUrl, $isAdministrator): string
+    {
+        $channelName = config('railchat.channel_name');
+
         $userId = strval($userId);
 
         $userData = [
@@ -42,7 +92,6 @@ class RailchatService
 
         $channel = $this->client->Channel('messaging', $channelName);
 
-        // $channel->create($userId);
         $channel->addMembers([$userId]);
 
         $token = $this->client->createToken($userId);
