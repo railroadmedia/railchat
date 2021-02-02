@@ -49,14 +49,14 @@ class RailchatService
         return $channels['channels'];
     }
 
-    public function removeChannel($channelName)
+    public function removeChannel(string $channelName)
     {
         $channel = $this->client->Channel('messaging', $channelName);
 
         $channel->delete();
     }
 
-    public function resetChannel($channelName)
+    public function resetChannel(string $channelName)
     {
         $channel = $this->client->Channel('messaging', $channelName);
 
@@ -74,8 +74,14 @@ class RailchatService
         return count($membersData['members']);
     }
 
-    public function getUserToken($userId, $displayName, $avatarUrl, $profileUrl, $isAdministrator): string
-    {
+    public function getUserToken(
+        int $userId,
+        string $displayName,
+        string $avatarUrl,
+        string $profileUrl,
+        bool $isAdministrator,
+        string $accessLevelName
+    ): string {
         $channelName = config('railchat.channel_name');
 
         $userId = strval($userId);
@@ -86,6 +92,7 @@ class RailchatService
             'displayName' => $displayName,
             'avatarUrl' => $avatarUrl,
             'profileUrl' => $profileUrl,
+            'accessLevelName' => $accessLevelName
         ];
 
         $this->client->updateUser($userData);
