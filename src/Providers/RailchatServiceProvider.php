@@ -7,6 +7,7 @@ use Railroad\Railchat\Commands\ChatChannelCreate;
 use Railroad\Railchat\Commands\ChatChannelList;
 use Railroad\Railchat\Commands\ChatChannelRemove;
 use Railroad\Railchat\Commands\ChatChannelReset;
+use Railroad\Railchat\Commands\ChatDev;
 
 class RailchatServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,7 @@ class RailchatServiceProvider extends ServiceProvider
                 ChatChannelList::class,
                 ChatChannelRemove::class,
                 ChatChannelReset::class,
+                ChatDev::class,
             ]
         );
 
