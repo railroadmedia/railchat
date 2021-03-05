@@ -69,10 +69,24 @@ class ChatDev extends Command
      */
     public function handle()
     {
-        $this->seedUsers();
-        $this->seedReactions('4a7b785d-f2d1-49ef-b064-71b4802ce501');
+        // $this->seedUsers();
+        // $this->seedReactions('4a7b785d-f2d1-49ef-b064-71b4802ce501');
+
+        $this->banUser();
 
         $this->info('Finished ChatDev');
+    }
+
+    protected function banUser()
+    {
+        $this->client
+            ->banUser(
+                '412483',
+                [
+                    'banned_by_id' => '150259',
+                    'reason' => 'test ban',
+                ]
+            );
     }
 
     protected function seedUsers()

@@ -37,6 +37,8 @@ class RailchatServiceProvider extends ServiceProvider
             ]
         );
 
+        //load package routes file
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/chat.php');
     }
 
     /**

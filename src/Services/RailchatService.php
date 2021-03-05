@@ -14,6 +14,8 @@ class RailchatService
     const ROLE_ADMINISTRATOR = 'admin';
     const ROLE_USER = 'user';
 
+    const BAN_REASON = 'default';
+
     public function __construct()
     {
         $credentials = config('railchat.get_stream_credentials');
@@ -104,5 +106,22 @@ class RailchatService
         $token = $this->client->createToken($userId);
 
         return $token;
+    }
+
+    public function banUser($userId)
+    {
+        $this->client
+            ->banUser(
+                strval($userId),
+                [
+                    'banned_by_id' => auth()->id(),
+                    'reason' => self::BAN_REASON,
+                ]
+            );
+    }
+
+    public function unbanUser($userId)
+    {
+        $this->client->unbanUser(strval($userId));
     }
 }

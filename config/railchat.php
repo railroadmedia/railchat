@@ -26,4 +26,7 @@ return [
             'member_limit' => 0,
         ],
     ],
+
+    'route_prefix' => 'chat',
+    'route_middleware_admin_groups' => [],
 ];
