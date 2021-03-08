@@ -2,7 +2,7 @@
 
 namespace Railroad\Railchat\Exceptions;
 
-class UpstreamExcetion extends Exception
+class UpstreamExcetion extends RailchatException
 {
     protected $message;
 

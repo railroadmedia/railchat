@@ -28,7 +28,7 @@ return [
     ],
 
     'route_prefix' => 'chat',
-    'route_middleware_admin_groups' => [],
+    'route_middleware_logged_in_groups' => [],
 
     // permissions
     'role_abilities' => [

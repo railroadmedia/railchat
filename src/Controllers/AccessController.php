@@ -52,7 +52,6 @@ class AccessController extends Controller
      */
     public function banUser(BanUserRequest $request)
     {
-        dd(auth()->id());
         $this->permissionService->canOrThrow(auth()->id(), 'chat.ban_user');
 
         try {
@@ -61,7 +60,7 @@ class AccessController extends Controller
             if ($e->getCode() == 404) {
                 throw new NotFoundException('StreamChat could not find specified user');
             } else {
-                throw new UpstreamExcetion('Exception occured while trying to ban user');
+                throw new UpstreamExcetion('StreamChat exception occured while trying to ban user');
             }
             error_log($e);
         } catch (Exception $e) {
@@ -91,7 +90,7 @@ class AccessController extends Controller
             if ($e->getCode() == 404) {
                 throw new NotFoundException('StreamChat could not find specified user');
             } else {
-                throw new UpstreamExcetion('Exception occured while trying to ban user');
+                throw new UpstreamExcetion('StreamChat exception occured while trying to ban user');
             }
             error_log($e);
         } catch (Exception $e) {
