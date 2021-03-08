@@ -29,4 +29,12 @@ return [
 
     'route_prefix' => 'chat',
     'route_middleware_admin_groups' => [],
+
+    // permissions
+    'role_abilities' => [
+        'administrator' => [
+            'chat.ban_user',
+            'chat.unban_user',
+        ],
+    ],
 ];

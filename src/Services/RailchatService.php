@@ -3,6 +3,7 @@
 namespace Railroad\Railchat\Services;
 
 use GetStream\StreamChat\Client;
+use Railroad\Railchat\Factories\StreamClientFactory;
 
 class RailchatService
 {
@@ -16,11 +17,9 @@ class RailchatService
 
     const BAN_REASON = 'default';
 
-    public function __construct()
+    public function __construct(StreamClientFactory $streamClientFactory)
     {
-        $credentials = config('railchat.get_stream_credentials');
-
-        $this->client = new Client($credentials['key'], $credentials['secret']);
+        $this->client = $streamClientFactory::build();
     }
 
     public function createChannel(): string
