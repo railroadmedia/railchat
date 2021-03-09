@@ -9,16 +9,18 @@ class RailchatException extends Exception
 {
     protected $message;
     protected $title;
+    protected $code;
 
     /**
      * RailchatException constructor.
      *
      * @param string $message
      */
-    public function __construct($message)
+    public function __construct($message, $code = 500)
     {
         $this->message = $message;
         $this->title = 'Railchat Exception';
+        $this->code = $code;
     }
 
     /**
@@ -35,7 +37,7 @@ class RailchatException extends Exception
                     ]
                 ],
             ],
-            404
+            $this->code
         );
     }
 }

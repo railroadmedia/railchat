@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller;
 use Railroad\Permissions\Services\PermissionService;
 use Railroad\Railchat\Exceptions\NotFoundException;
 use Railroad\Railchat\Exceptions\RailchatException;
-use Railroad\Railchat\Exceptions\UpstreamExcetion;
+use Railroad\Railchat\Exceptions\UpstreamException;
 use Railroad\Railchat\Requests\BanUserRequest;
 use Railroad\Railchat\Requests\UnbanUserRequest;
 use Railroad\Railchat\Services\RailchatService;
@@ -60,7 +60,7 @@ class AccessController extends Controller
             if ($e->getCode() == 404) {
                 throw new NotFoundException('StreamChat could not find specified user');
             } else {
-                throw new UpstreamExcetion('StreamChat exception occured while trying to ban user');
+                throw new UpstreamException('StreamChat exception occured while trying to ban user');
             }
             error_log($e);
         } catch (Exception $e) {
@@ -90,11 +90,11 @@ class AccessController extends Controller
             if ($e->getCode() == 404) {
                 throw new NotFoundException('StreamChat could not find specified user');
             } else {
-                throw new UpstreamExcetion('StreamChat exception occured while trying to ban user');
+                throw new UpstreamException('StreamChat exception occured while trying to unban user');
             }
             error_log($e);
         } catch (Exception $e) {
-            throw new RailchatException('Exception occured while trying to ban user');
+            throw new RailchatException('Exception occured while trying to unban user');
             error_log($e);
         }
 

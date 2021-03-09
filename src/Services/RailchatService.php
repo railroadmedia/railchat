@@ -121,15 +121,6 @@ class RailchatService
 
     public function unbanUser($userId)
     {
-        // $unban = $this->client->unbanUser(strval($userId));
-
-        // $banned = $this->client->queryUsers(['banned' => true], [], ['limit' => 10, 'offset' => 0]);
-
-        // dd([
-        //     'unban' => $unban,
-        //     'banned' => $banned,
-        // ]);
-
         $this->client->unbanUser(strval($userId));
     }
 }

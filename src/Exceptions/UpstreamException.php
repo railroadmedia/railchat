@@ -2,7 +2,7 @@
 
 namespace Railroad\Railchat\Exceptions;
 
-class UpstreamExcetion extends RailchatException
+class UpstreamException extends RailchatException
 {
     protected $message;
 
@@ -11,9 +11,10 @@ class UpstreamExcetion extends RailchatException
      *
      * @param string $message
      */
-    public function __construct($message)
+    public function __construct($message, $code = 503)
     {
         $this->message = $message;
         $this->title = 'StreamChat Exception';
+        $this->code = $code;
     }
 }
