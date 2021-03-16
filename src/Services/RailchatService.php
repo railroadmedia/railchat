@@ -22,19 +22,15 @@ class RailchatService
         $this->client = $streamClientFactory::build();
     }
 
-    public function createChannel(): string
+    public function createChannel(string $channelName)
     {
         $userData = config('railchat.channel_founder');
 
         $this->client->updateUser($userData);
 
-        $channelName = config('railchat.channel_name');
-
         $channel = $this->client->Channel('messaging', $channelName);
 
         $channel->create($userData['id']);
-
-        return $channelName;
     }
 
     public function getChannelsList(): array
@@ -66,7 +62,8 @@ class RailchatService
 
     public function getChannelMembersCount(): int
     {
-        $channelName = config('railchat.channel_name');
+        // todo - update
+        $channelName = config('railchat.chat_channel_name');
 
         $channel = $this->client->Channel('messaging', $channelName);
 
@@ -83,7 +80,7 @@ class RailchatService
         bool $isAdministrator,
         string $accessLevelName
     ): string {
-        $channelName = config('railchat.channel_name');
+        $channelName = config('railchat.chat_channel_name');
 
         $userId = strval($userId);
 
@@ -101,6 +98,8 @@ class RailchatService
         $channel = $this->client->Channel('messaging', $channelName);
 
         $channel->addMembers([$userId]);
+
+        // todo - add user to questions channel, check if the API call can include both channels
 
         $token = $this->client->createToken($userId);
 

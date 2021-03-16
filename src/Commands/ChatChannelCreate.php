@@ -13,7 +13,7 @@ class ChatChannelCreate extends Command
      *
      * @var string
      */
-    protected $signature = 'ChatChannelCreate';
+    protected $signature = 'ChatChannelCreate {channelName}';
 
     /**
      * The console command description.
@@ -46,7 +46,9 @@ class ChatChannelCreate extends Command
      */
     public function handle()
     {
-        $channelName = $this->railchatService->createChannel();
+        $channelName = $this->argument('channelName');
+
+        $this->railchatService->createChannel($channelName);
 
         $format = "Created chat channel: %s\n";
 

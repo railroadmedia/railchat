@@ -6,7 +6,8 @@ return [
         'secret' => env('STREAM_APP_SECRET'),
     ],
 
-    'channel_name' => 'test',
+    'chat_channel_name' => 'test',
+    'questions_channel_name' => 'questions_test',
 
     'channel_founder' => [
         'id' => '150259',

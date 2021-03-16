@@ -16,7 +16,7 @@ class ChatDev extends Command
      *
      * @var string
      */
-    protected $signature = 'ChatDev';
+    protected $signature = 'ChatDev {channelName}';
 
     /**
      * The console command description.
@@ -56,10 +56,6 @@ class ChatDev extends Command
         $credentials = config('railchat.get_stream_credentials');
 
         $this->client = new Client($credentials['key'], $credentials['secret']);
-
-        $channelName = config('railchat.channel_name');
-
-        $this->channel = $this->client->Channel('messaging', $channelName);
     }
 
     /**
@@ -69,6 +65,10 @@ class ChatDev extends Command
      */
     public function handle()
     {
+        $channelName = $this->argument('channelName');
+
+        $this->channel = $this->client->Channel('messaging', $channelName);
+
         // $this->seedUsers();
         // $this->seedReactions('4a7b785d-f2d1-49ef-b064-71b4802ce501');
 

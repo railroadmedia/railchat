@@ -20,7 +20,7 @@ class ChatChannelList extends Command
      *
      * @var string
      */
-    protected $description = 'Create the chat channel';
+    protected $description = 'List the chat channels';
 
     /**
      * @var RailchatService
