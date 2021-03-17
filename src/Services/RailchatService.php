@@ -80,7 +80,8 @@ class RailchatService
         bool $isAdministrator,
         string $accessLevelName
     ): string {
-        $channelName = config('railchat.chat_channel_name');
+        $chatChannelName = config('railchat.chat_channel_name');
+        $questionsChannelName = config('railchat.questions_channel_name');
 
         $userId = strval($userId);
 
@@ -95,11 +96,13 @@ class RailchatService
 
         $this->client->updateUser($userData);
 
-        $channel = $this->client->Channel('messaging', $channelName);
+        $chatChannel = $this->client->Channel('messaging', $chatChannelName);
 
-        $channel->addMembers([$userId]);
+        $chatChannel->addMembers([$userId]);
 
-        // todo - add user to questions channel, check if the API call can include both channels
+        $questionsChannel = $this->client->Channel('messaging', $questionsChannelName);
+
+        $questionsChannel->addMembers([$userId]);
 
         $token = $this->client->createToken($userId);
 
