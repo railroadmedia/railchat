@@ -10,11 +10,11 @@ Route::group([
     Route::post(
         '/ban-user',
         Railroad\Railchat\Controllers\AccessController::class . '@banUser'
-    )->name('railchat.ban-user');
+    )->name('railchat.app-ban-user');
 
     Route::post(
         '/unban-user',
         Railroad\Railchat\Controllers\AccessController::class . '@unbanUser'
-    )->name('railchat.unban-user');
+    )->name('railchat.app-unban-user');
 
 });
