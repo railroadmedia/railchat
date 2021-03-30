@@ -2,6 +2,7 @@
 
 namespace Railroad\Railchat\Services;
 
+use GetStream\StreamChat\Channel;
 use GetStream\StreamChat\Client;
 use Railroad\Railchat\Factories\StreamClientFactory;
 
@@ -12,6 +13,16 @@ class RailchatService
      */
     private $client;
 
+    /**
+     * @var Channel
+     */
+    private $chatChannel;
+
+    /**
+     * @var Channel
+     */
+    private $questionsChannel;
+
     const ROLE_ADMINISTRATOR = 'admin';
     const ROLE_USER = 'user';
 
@@ -20,6 +31,12 @@ class RailchatService
     public function __construct(StreamClientFactory $streamClientFactory)
     {
         $this->client = $streamClientFactory::build();
+
+        $chatChannelName = config('railchat.chat_channel_name');
+        $questionsChannelName = config('railchat.questions_channel_name');
+
+        $this->chatChannel = $this->client->Channel('messaging', $chatChannelName);
+        $this->questionsChannel = $this->client->Channel('messaging', $questionsChannelName);
     }
 
     public function createChannel(string $channelName)
@@ -80,8 +97,6 @@ class RailchatService
         bool $isAdministrator,
         string $accessLevelName
     ): string {
-        $chatChannelName = config('railchat.chat_channel_name');
-        $questionsChannelName = config('railchat.questions_channel_name');
 
         $userId = strval($userId);
 
@@ -96,13 +111,8 @@ class RailchatService
 
         $this->client->updateUser($userData);
 
-        $chatChannel = $this->client->Channel('messaging', $chatChannelName);
-
-        $chatChannel->addMembers([$userId]);
-
-        $questionsChannel = $this->client->Channel('messaging', $questionsChannelName);
-
-        $questionsChannel->addMembers([$userId]);
+        $this->chatChannel->addMembers([$userId]);
+        $this->questionsChannel->addMembers([$userId]);
 
         $token = $this->client->createToken($userId);
 
@@ -124,5 +134,14 @@ class RailchatService
     public function unbanUser($userId)
     {
         $this->client->unbanUser(strval($userId));
+    }
+
+    public function deleteUserMessages($userId)
+    {
+        $this->client->deactivateUser($userId, ['mark_messages_deleted' => true]);
+        $this->client->reactivateUser($userId, ['mark_messages_deleted' => false]);
+
+        $this->chatChannel->sendEvent(['type' => 'delete_user_messages'], $userId);
+        $this->questionsChannel->sendEvent(['type' => 'delete_user_messages'], $userId);
     }
 }

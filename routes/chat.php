@@ -17,4 +17,9 @@ Route::group([
         Railroad\Railchat\Controllers\AccessController::class . '@unbanUser'
     )->name('railchat.unban-user');
 
+    Route::post(
+        '/delete-user-messages',
+        Railroad\Railchat\Controllers\AccessController::class . '@deleteUserMessages'
+    )->name('railchat.delete-user-messages');
+
 });

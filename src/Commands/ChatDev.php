@@ -16,7 +16,7 @@ class ChatDev extends Command
      *
      * @var string
      */
-    protected $signature = 'ChatDev {channelName}';
+    protected $signature = 'ChatDev {userId}';
 
     /**
      * The console command description.
@@ -65,14 +65,18 @@ class ChatDev extends Command
      */
     public function handle()
     {
-        $channelName = $this->argument('channelName');
+        // $channelName = $this->argument('channelName');
 
-        $this->channel = $this->client->Channel('messaging', $channelName);
+        // $this->channel = $this->client->Channel('messaging', $channelName);
 
         // $this->seedUsers();
         // $this->seedReactions('4a7b785d-f2d1-49ef-b064-71b4802ce501');
 
-        $this->banUser();
+        // $this->banUser();
+
+        $userId = $this->argument('userId');
+
+        $this->deleteAllMessages($userId);
 
         $this->info('Finished ChatDev');
     }
@@ -87,6 +91,14 @@ class ChatDev extends Command
                     'reason' => 'test ban',
                 ]
             );
+    }
+
+    protected function deleteAllMessages($userId)
+    {
+        $this->client->deactivateUser($userId, ['mark_messages_deleted' => true]);
+        $this->client->reactivateUser($userId, ['mark_messages_deleted' => false]);
+        $channel = $this->client->Channel('messaging', 'test');
+        $channel->sendEvent(['type' => 'delete_user_messages'], '426040');
     }
 
     protected function seedUsers()

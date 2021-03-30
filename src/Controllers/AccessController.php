@@ -11,6 +11,7 @@ use Railroad\Railchat\Exceptions\NotFoundException;
 use Railroad\Railchat\Exceptions\RailchatException;
 use Railroad\Railchat\Exceptions\UpstreamException;
 use Railroad\Railchat\Requests\BanUserRequest;
+use Railroad\Railchat\Requests\DeleteUserMessagesRequest;
 use Railroad\Railchat\Requests\UnbanUserRequest;
 use Railroad\Railchat\Services\RailchatService;
 use Throwable;
@@ -95,6 +96,36 @@ class AccessController extends Controller
             error_log($e);
         } catch (Exception $e) {
             throw new RailchatException('Exception occured while trying to unban user');
+            error_log($e);
+        }
+
+        return response()->json();
+    }
+
+    /**
+     * Remove all user messages from chat
+     *
+     * @param DeleteUserMessagesRequest $request
+     *
+     * @return JsonResponse
+     *
+     * @throws Throwable
+     */
+    public function deleteUserMessages(DeleteUserMessagesRequest $request)
+    {
+        $this->permissionService->canOrThrow(auth()->id(), 'chat.delete_user_messages');
+
+        try {
+            $this->railchatService->deleteUserMessages($request->get('user_id'));
+        } catch (StreamException $e) {
+            if ($e->getCode() == 404) {
+                throw new NotFoundException('StreamChat could not find specified user');
+            } else {
+                throw new UpstreamException('StreamChat exception occured while trying to remove user messages');
+            }
+            error_log($e);
+        } catch (Exception $e) {
+            throw new RailchatException('Exception occured while trying to remove user messages');
             error_log($e);
         }
 
