@@ -129,6 +129,8 @@ class RailchatService
                     'reason' => self::BAN_REASON,
                 ]
             );
+
+        $this->deleteUserMessages($userId);
     }
 
     public function unbanUser($userId)

@@ -4,6 +4,7 @@ namespace Railroad\Railchat\Tests;
 
 use Faker\Factory;
 use Faker\Generator;
+use GetStream\StreamChat\Channel;
 use GetStream\StreamChat\Client;
 use Mockery;
 use Orchestra\Testbench\TestCase as BaseTestCase;
@@ -33,6 +34,11 @@ class RailchatTestCase extends BaseTestCase
      * @var MockObject
      */
     protected $streamClientMock;
+
+    /**
+     * @var MockObject
+     */
+    protected $streamChannelMock;
 
     protected function setUp()
     {
@@ -65,6 +71,17 @@ class RailchatTestCase extends BaseTestCase
             ->andReturn($this->streamClientMock);
 
         $this->app->instance(StreamClientFactory::class, $this->streamClientFactoryMock);
+
+        // create mocked stream channel
+        $this->streamChannelMock =
+            $this->getMockBuilder(Channel::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+
+        // setup mocked stream client to return the mocked stream channel
+        $this->streamClientMock
+            ->method('Channel')
+            ->willReturn($this->streamChannelMock);
     }
 
     /**

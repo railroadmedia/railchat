@@ -36,6 +36,7 @@ return [
         'administrator' => [
             'chat.ban_user',
             'chat.unban_user',
+            'chat.delete_user_messages',
         ],
     ],
 ];
