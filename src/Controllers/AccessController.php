@@ -58,15 +58,15 @@ class AccessController extends Controller
         try {
             $this->railchatService->banUser($request->get('user_id'));
         } catch (StreamException $e) {
+            error_log($e);
             if ($e->getCode() == 404) {
                 throw new NotFoundException('StreamChat could not find specified user');
             } else {
                 throw new UpstreamException('StreamChat exception occured while trying to ban user');
             }
-            error_log($e);
         } catch (Exception $e) {
-            throw new RailchatException('Exception occured while trying to ban user');
             error_log($e);
+            throw new RailchatException('Exception occured while trying to ban user');
         }
 
         return response()->json();
@@ -88,15 +88,15 @@ class AccessController extends Controller
         try {
             $this->railchatService->unbanUser($request->get('user_id'));
         } catch (StreamException $e) {
+            error_log($e);
             if ($e->getCode() == 404) {
                 throw new NotFoundException('StreamChat could not find specified user');
             } else {
                 throw new UpstreamException('StreamChat exception occured while trying to unban user');
             }
-            error_log($e);
         } catch (Exception $e) {
-            throw new RailchatException('Exception occured while trying to unban user');
             error_log($e);
+            throw new RailchatException('Exception occured while trying to unban user');
         }
 
         return response()->json();
@@ -118,15 +118,15 @@ class AccessController extends Controller
         try {
             $this->railchatService->deleteUserMessages($request->get('user_id'));
         } catch (StreamException $e) {
+            error_log($e);
             if ($e->getCode() == 404) {
                 throw new NotFoundException('StreamChat could not find specified user');
             } else {
                 throw new UpstreamException('StreamChat exception occured while trying to remove user messages');
             }
-            error_log($e);
         } catch (Exception $e) {
-            throw new RailchatException('Exception occured while trying to remove user messages');
             error_log($e);
+            throw new RailchatException('Exception occured while trying to remove user messages');
         }
 
         return response()->json();
