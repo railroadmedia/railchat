@@ -77,16 +77,29 @@ class RailchatService
         $channel->truncate();
     }
 
-    public function getChannelMembersCount(): int
+    public function getChannelWatcherCount(): int
     {
-        // todo - update
         $channelName = config('railchat.chat_channel_name');
 
-        $channel = $this->client->Channel('messaging', $channelName);
+        $watcherCount = 0;
 
-        $membersData = $channel->queryMembers();
+        $channelsListConfig = config('railchat.channels_list');
 
-        return count($membersData['members']);
+        $channelsData = $this->client->queryChannels(
+            ['id' => $channelName],
+            $channelsListConfig['sort'],
+            $channelsListConfig['options']
+        );
+
+        if (
+            isset($channelsData['channels'])
+            && isset($channelsData['channels'][0])
+            && isset($channelsData['channels'][0]['watcher_count'])
+        ) {
+            $watcherCount = $channelsData['channels'][0]['watcher_count'];
+        }
+
+        return $watcherCount;
     }
 
     public function getUserToken(
