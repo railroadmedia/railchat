@@ -2,7 +2,12 @@
 
 namespace Railroad\Railchat\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Railroad\Railchat\Commands\ChatChannelCreate;
+use Railroad\Railchat\Commands\ChatChannelList;
+use Railroad\Railchat\Commands\ChatChannelRemove;
+use Railroad\Railchat\Commands\ChatChannelReset;
+use Railroad\Railchat\Commands\ChatDev;
 
 class RailchatServiceProvider extends ServiceProvider
 {
@@ -20,6 +25,21 @@ class RailchatServiceProvider extends ServiceProvider
                 __DIR__ . '/../../config/railchat.php' => config_path('railchat.php'),
             ]
         );
+
+        // commands
+        $this->commands(
+            [
+                ChatChannelCreate::class,
+                ChatChannelList::class,
+                ChatChannelRemove::class,
+                ChatChannelReset::class,
+                ChatDev::class,
+            ]
+        );
+
+        //load package routes file
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/app.php');
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/chat.php');
     }
 
     /**
