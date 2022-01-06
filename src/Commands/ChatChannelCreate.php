@@ -13,7 +13,7 @@ class ChatChannelCreate extends Command
      *
      * @var string
      */
-    protected $signature = 'ChatChannelCreate {channelName}';
+    protected $signature = 'RailChat:ChatChannelCreate {channelName}';
 
     /**
      * The console command description.

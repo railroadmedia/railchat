@@ -8,6 +8,7 @@ use Railroad\Railchat\Commands\ChatChannelList;
 use Railroad\Railchat\Commands\ChatChannelRemove;
 use Railroad\Railchat\Commands\ChatChannelReset;
 use Railroad\Railchat\Commands\ChatDev;
+use Railroad\Railchat\Commands\ReactivateUser;
 use Railroad\Railchat\Commands\UnbanUser;
 
 class RailchatServiceProvider extends ServiceProvider
@@ -31,6 +32,7 @@ class RailchatServiceProvider extends ServiceProvider
         $this->commands(
             [
                 UnbanUser::class,
+                ReactivateUser::class,
                 ChatChannelCreate::class,
                 ChatChannelList::class,
                 ChatChannelRemove::class,

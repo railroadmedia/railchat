@@ -13,7 +13,7 @@ class ChatChannelRemove extends Command
      *
      * @var string
      */
-    protected $signature = 'ChatChannelRemove {channelName}';
+    protected $signature = 'RailChat:ChatChannelRemove {channelName}';
 
     /**
      * The console command description.

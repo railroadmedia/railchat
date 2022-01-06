@@ -13,7 +13,7 @@ class ChatChannelReset extends Command
      *
      * @var string
      */
-    protected $signature = 'ChatChannelReset {channelName}';
+    protected $signature = 'RailChat:ChatChannelReset {channelName}';
 
     /**
      * The console command description.

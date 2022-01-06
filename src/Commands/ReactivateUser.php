@@ -6,21 +6,21 @@ use Illuminate\Console\Command;
 use Railroad\Railchat\Services\RailchatService;
 use Throwable;
 
-class UnbanUser extends Command
+class ReactivateUser extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'RailChat:UnbanUser {userId}';
+    protected $signature = 'RailChat:ReactivateUser {userId}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Unban a user ID.';
+    protected $description = 'Reactivate a user ID.';
 
     /**
      * @var RailchatService
@@ -28,7 +28,7 @@ class UnbanUser extends Command
     private $railchatService;
 
     /**
-     * UnbanUser constructor.
+     * ReactivateUser constructor.
      *
      * @param RailchatService $railchatService
      */
@@ -48,7 +48,7 @@ class UnbanUser extends Command
     {
         $userId = $this->argument('userId');
 
-        $this->railchatService->unbanUser($userId);
+        $this->railchatService->reactivateUser($userId);
 
         $this->info('Unbanned user: ' . $userId);
     }

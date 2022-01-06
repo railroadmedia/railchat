@@ -13,7 +13,7 @@ class ChatChannelList extends Command
      *
      * @var string
      */
-    protected $signature = 'ChatChannelList';
+    protected $signature = 'RailChat:ChatChannelList';
 
     /**
      * The console command description.

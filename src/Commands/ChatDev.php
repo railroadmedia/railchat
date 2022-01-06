@@ -16,7 +16,7 @@ class ChatDev extends Command
      *
      * @var string
      */
-    protected $signature = 'ChatDev {userId}';
+    protected $signature = 'RailChat:ChatDev {userId}';
 
     /**
      * The console command description.

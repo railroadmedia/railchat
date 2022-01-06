@@ -151,6 +151,11 @@ class RailchatService
         $this->client->unbanUser(strval($userId));
     }
 
+    public function reactivateUser($userId)
+    {
+        $this->client->reactivateUser(strval($userId));
+    }
+
     public function deleteUserMessages($userId)
     {
         $this->client->deactivateUser($userId, ['mark_messages_deleted' => true]);
