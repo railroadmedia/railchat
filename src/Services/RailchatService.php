@@ -8,39 +8,40 @@ use Railroad\Railchat\Factories\StreamClientFactory;
 
 class RailchatService
 {
-    /**
-     * @var Client
-     */
-    private $client;
+    private StreamClientFactory $streamClientFactory;
+    private Client $client;
+    private Channel $chatChannel;
+    private Channel $questionsChannel;
 
-    /**
-     * @var Channel
-     */
-    private $chatChannel;
-
-    /**
-     * @var Channel
-     */
-    private $questionsChannel;
+    private $isConnected = false;
 
     const ROLE_ADMINISTRATOR = 'admin';
     const ROLE_USER = 'user';
-
     const BAN_REASON = 'default';
 
     public function __construct(StreamClientFactory $streamClientFactory)
     {
-        $this->client = $streamClientFactory::build();
+        $this->streamClientFactory = $streamClientFactory;
+    }
 
-        $chatChannelName = config('railchat.chat_channel_name');
-        $questionsChannelName = config('railchat.questions_channel_name');
+    public function connect()
+    {
+        if ($this->isConnected) {
+            return;
+        }
 
-        $this->chatChannel = $this->client->Channel('messaging', $chatChannelName);
-        $this->questionsChannel = $this->client->Channel('messaging', $questionsChannelName);
+        $this->client = $this->streamClientFactory::build();
+
+        $this->chatChannel = $this->client->Channel('messaging', config('railchat.chat_channel_name'));
+        $this->questionsChannel = $this->client->Channel('messaging', config('railchat.questions_channel_name'));
+
+        $this->isConnected = true;
     }
 
     public function createChannel(string $channelName)
     {
+        $this->connect();
+
         $userData = config('railchat.channel_founder');
 
         $this->client->updateUser($userData);
@@ -52,6 +53,8 @@ class RailchatService
 
     public function getChannelsList(): array
     {
+        $this->connect();
+
         $channelsListConfig = config('railchat.channels_list');
 
         $channels = $this->client->queryChannels(
@@ -65,6 +68,8 @@ class RailchatService
 
     public function removeChannel(string $channelName)
     {
+        $this->connect();
+
         $channel = $this->client->Channel('messaging', $channelName);
 
         $channel->delete();
@@ -72,6 +77,8 @@ class RailchatService
 
     public function resetChannel(string $channelName)
     {
+        $this->connect();
+
         $channel = $this->client->Channel('messaging', $channelName);
 
         $channel->truncate();
@@ -79,6 +86,8 @@ class RailchatService
 
     public function getChannelWatcherCount(): int
     {
+        $this->connect();
+
         $channelName = config('railchat.chat_channel_name');
 
         $watcherCount = 0;
@@ -110,6 +119,7 @@ class RailchatService
         bool $isAdministrator,
         string $accessLevelName
     ): string {
+        $this->connect();
 
         $userId = strval($userId);
 
@@ -134,6 +144,8 @@ class RailchatService
 
     public function banUser($userId)
     {
+        $this->connect();
+
         $this->client
             ->banUser(
                 strval($userId),
@@ -148,16 +160,22 @@ class RailchatService
 
     public function unbanUser($userId)
     {
+        $this->connect();
+
         $this->client->unbanUser(strval($userId));
     }
 
     public function reactivateUser($userId)
     {
+        $this->connect();
+
         $this->client->reactivateUser(strval($userId));
     }
 
     public function deleteUserMessages($userId)
     {
+        $this->connect();
+
         $this->client->deactivateUser($userId, ['mark_messages_deleted' => true]);
         $this->client->reactivateUser($userId, ['mark_messages_deleted' => false]);
 
