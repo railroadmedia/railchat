@@ -26,7 +26,7 @@ class AccessControllerTest extends RailchatTestCase
                     'detail' => 'The user id field is required.',
                 ]
             ],
-            $response->decodeResponseJson('errors')
+            $response->json('errors')
         );
     }
 
@@ -60,7 +60,7 @@ class AccessControllerTest extends RailchatTestCase
                     'detail' => 'StreamChat could not find specified user',
                 ]
             ],
-            $response->decodeResponseJson('errors')
+            $response->json('errors')
         );
     }
 
@@ -94,7 +94,7 @@ class AccessControllerTest extends RailchatTestCase
                     'detail' => 'StreamChat exception occured while trying to ban user',
                 ]
             ],
-            $response->decodeResponseJson('errors')
+            $response->json('errors')
         );
     }
 
@@ -128,7 +128,7 @@ class AccessControllerTest extends RailchatTestCase
                     'detail' => 'Exception occured while trying to ban user',
                 ]
             ],
-            $response->decodeResponseJson('errors')
+            $response->json('errors')
         );
     }
 
@@ -148,7 +148,7 @@ class AccessControllerTest extends RailchatTestCase
         $this->assertEquals(200, $response->getStatusCode());
 
         // assert empty response
-        $this->assertEquals([], $response->decodeResponseJson());
+        $this->assertEquals([], $response->json());
     }
 
     public function test_unban_user_validation()
@@ -169,7 +169,7 @@ class AccessControllerTest extends RailchatTestCase
                     'detail' => 'The user id field is required.',
                 ]
             ],
-            $response->decodeResponseJson('errors')
+            $response->json('errors')
         );
     }
 
@@ -203,7 +203,7 @@ class AccessControllerTest extends RailchatTestCase
                     'detail' => 'StreamChat could not find specified user',
                 ]
             ],
-            $response->decodeResponseJson('errors')
+            $response->json('errors')
         );
     }
 
@@ -237,7 +237,7 @@ class AccessControllerTest extends RailchatTestCase
                     'detail' => 'StreamChat exception occured while trying to unban user',
                 ]
             ],
-            $response->decodeResponseJson('errors')
+            $response->json('errors')
         );
     }
 
@@ -271,7 +271,7 @@ class AccessControllerTest extends RailchatTestCase
                     'detail' => 'Exception occured while trying to unban user',
                 ]
             ],
-            $response->decodeResponseJson('errors')
+            $response->json('errors')
         );
     }
 
@@ -291,7 +291,7 @@ class AccessControllerTest extends RailchatTestCase
         $this->assertEquals(200, $response->getStatusCode());
 
         // assert empty response
-        $this->assertEquals([], $response->decodeResponseJson());
+        $this->assertEquals([], $response->json());
     }
 
     public function test_delete_user_messages_validation()
@@ -312,7 +312,7 @@ class AccessControllerTest extends RailchatTestCase
                     'detail' => 'The user id field is required.',
                 ]
             ],
-            $response->decodeResponseJson('errors')
+            $response->json('errors')
         );
     }
 
@@ -346,7 +346,7 @@ class AccessControllerTest extends RailchatTestCase
                     'detail' => 'StreamChat could not find specified user',
                 ]
             ],
-            $response->decodeResponseJson('errors')
+            $response->json('errors')
         );
     }
 
@@ -380,7 +380,7 @@ class AccessControllerTest extends RailchatTestCase
                     'detail' => 'StreamChat exception occured while trying to remove user messages',
                 ]
             ],
-            $response->decodeResponseJson('errors')
+            $response->json('errors')
         );
     }
 
@@ -414,7 +414,7 @@ class AccessControllerTest extends RailchatTestCase
                     'detail' => 'Exception occured while trying to remove user messages',
                 ]
             ],
-            $response->decodeResponseJson('errors')
+            $response->json('errors')
         );
     }
 
@@ -434,6 +434,6 @@ class AccessControllerTest extends RailchatTestCase
         $this->assertEquals(200, $response->getStatusCode());
 
         // assert empty response
-        $this->assertEquals([], $response->decodeResponseJson());
+        $this->assertEquals([], $response->json());
     }
 }

@@ -40,7 +40,7 @@ class RailchatTestCase extends BaseTestCase
      */
     protected $streamChannelMock;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
