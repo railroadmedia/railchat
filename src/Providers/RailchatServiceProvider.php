@@ -29,7 +29,7 @@ class RailchatServiceProvider extends ServiceProvider
         );
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/railchat.php',
+            __DIR__ . '/../../config/railchat.php',
             'railchat'
         );
 
