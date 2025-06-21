@@ -5,7 +5,7 @@
   "prefer-stable": true,
   "minimum-stability": "dev",
   "require": {
-    "php": "~7.1",
+    "php": "~7.1|^8.0",
     "get-stream/stream": "^4.1",
     "laravel/framework": "5.6.*",
     "railroad/permissions": "^1.0",
