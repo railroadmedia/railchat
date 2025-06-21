@@ -52,10 +52,6 @@ class ChatDev extends Command
         parent::__construct();
 
         $this->faker = $faker;
-
-        $credentials = config('railchat.get_stream_credentials');
-
-        $this->client = new Client($credentials['key'], $credentials['secret']);
     }
 
     /**
@@ -65,6 +61,9 @@ class ChatDev extends Command
      */
     public function handle()
     {
+        $credentials = config('railchat.get_stream_credentials');
+        $this->client = new Client($credentials['key'], $credentials['secret']);
+
         // $channelName = $this->argument('channelName');
 
         // $this->channel = $this->client->Channel('messaging', $channelName);
